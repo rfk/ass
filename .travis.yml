@@ -4,8 +4,19 @@ node_js:
  - "0.8"
  - "0.10"
 
-before_install: sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+# only this travis job is required to install these dependencies. Other
+# modules are free not to use the svg reporter and requiring these
+# platform-specific binary dependencies.
+before_install:
+  - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+  # required for nodejs 0.8.x - https://github.com/jshint/jshint/issues/1681
+  - npm install -g npm
 
 notifications:
   email:
     - lloyd@hilaiel.com
+    - jrgmorrison@gmail.com
+
+script:
+  - npm test
+  - cd example && npm install .. && npm install && npm test && npm run test-svg

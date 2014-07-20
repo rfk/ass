@@ -1,3 +1,7 @@
+v0.0.6:
+	* refactor reporting so that an SVG reporter can be
+	  added optionally to a project.
+
 v0.0.5:
 	* SVG reported creates a badge of coverage (awesome @espadrine!)
 	* fix issue #3 - simultaneous invocation of multiple reporters

@@ -1,6 +1,11 @@
 // For a test author to enable code coverage instrumentation,
 // they make a single call
-var ass = require('ass').enable();
+var svgReporter = require('ass-svg-reporter');
+var ass = require('ass').enable({
+  reporters: {
+    svg: svgReporter
+  }
+});
 
 var     cp = require('child_process'),
     should = require('should'),
@@ -54,6 +59,17 @@ describe('a test', function() {
     ass.report('html', function(err, r) {
       try {
         fs.writeFileSync('coverage.html', r);
+      } catch (e) {
+        if (!err) err = e;
+      }
+      done(err);
+    });
+  });
+
+  it('coverage.svg should be written', function(done) {
+    ass.report('svg', function(err, r) {
+      try {
+        fs.writeFileSync('coverage.svg', r);
       } catch (e) {
         if (!err) err = e;
       }

@@ -42,6 +42,23 @@ Finally, you can enable testing in your test harness programatically:
       require('fs').writeFileSync('coverage.html', report);
     });
 
+The `enable` function accepts an `options` hash. There are two supported settings:
+
+* `exclude` - files to exclude from coverage - passed to `blanket` - see [Blanket Options](https://github.com/alex-seville/blanket/blob/master/docs/browser_options.md)
+
+* `reporters` - a hash containing references to reporter implementations, e.g., to generate an SVG button. (`json` and `html` reporters are included with `ass`).
+
+```
+    var ass = require('ass').enable({
+      exclude: [ './vendor' ],
+      reporters: {
+        svg: function(data, callback) {
+          // ...
+        }
+      }
+    });
+```
+
 ## Example
 
 A full example of code coverage is available:
