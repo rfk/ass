@@ -16,4 +16,5 @@ server.listen(0, '127.0.0.1', function() {
 
 process.on('SIGTERM', function() {
   server.close();
+  process.exit(0);
 });

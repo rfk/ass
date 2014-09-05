@@ -4,13 +4,14 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "ass": "*",
     "express": "~3.4.6",
     "mocha": "~1.14.0",
-    "should": "~2.1.0",
-    "ass": "*"
+    "should": "~2.1.0"
   },
   "scripts": {
-    "test": "mocha -R spec test.js"
+    "test": "mocha -R spec test.js",
+    "test-svg": "npm install git://github.com/jrgm/svg-reporter.git && mocha -R spec test-svg.js"
   },
   "devDependencies": {
     "request": "~2.30.0"

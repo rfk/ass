@@ -13,17 +13,29 @@ const envVar = "ASS_CODE_COVERAGE";
 //    console.log(results);
 //  });
 
-module.exports.enable = function(options) {
-  var temp  = require('temp'),
-      path  = require('path'),
-      fs    = require('fs');
+var temp  = require('temp'),
+    path  = require('path'),
+    fs    = require('fs');
 
+var reporters = {};
+[ 'json', 'html' ].forEach(function(format) {
+  var reporter = require(path.join(__dirname, 'lib', 'reporters', format));
+  reporters[format] = reporter;
+});
+
+module.exports.enable = function(options) {
   if (!options) {
     options = {};
   }
 
   if (process.env[envVar]) {
     throw new Error("code coverage is already enabled");
+  }
+
+  if (options.reporters) {
+    Object.keys(options.reporters).forEach(function(key) {
+      reporters[key] = options.reporters[key];
+    });
   }
 
   // Note: code coverage support is indicated via a directory
@@ -115,17 +127,8 @@ module.exports.enable = function(options) {
 
   module.exports.report = function(format, cb) {
     this.collect(function(err) {
-      if (err) {
-        return cb(err);
-      }
-
-      var reporter;
-      try {
-        reporter = require(path.join(__dirname, 'lib', 'reporters', format));
-      } catch(e) {
-        throw new Error('No such format: ' + format + ": " + e);
-      }
-
+      if (err) return cb(err);
+      var reporter = reporters[format];
       reporter(global._$jscoverage, function(res) {
         cb(err, res);
       });
