@@ -1,8 +1,9 @@
 language: node_js
 
 node_js:
- - "0.8"
  - "0.10"
+ - "0.12"
+ - "iojs"
 
 # only this travis job is required to install these dependencies. Other
 # modules are free not to use the svg reporter and requiring these
