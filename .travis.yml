@@ -21,3 +21,9 @@ notifications:
 script:
   - npm test
   - cd example && npm install .. && npm install && npm test && npm run test-svg
+
+# 2015--5-20 node-canvas is broken on iojs 2.0.2 allow failure there for now  
+matrix:
+  allow_failures:
+    - node_js: "iojs"
+  fast_finish: true
