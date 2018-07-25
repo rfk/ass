@@ -57,7 +57,7 @@ module.exports.enable = function(options) {
       // synchronously delete all data files at process exit.
       fs.readdirSync(context.dir).forEach(function(f) {
         if (f.indexOf('.') !== 0) {
-          fs.unlink(f);
+          fs.unlinkSync(f);
         }
       });
       fs.rmdirSync(context.dir);
@@ -114,7 +114,7 @@ module.exports.enable = function(options) {
       }).forEach(function(f) {
         var p = path.join(context.dir, f);
         var data = JSON.parse(fs.readFileSync(p));
-        fs.unlink(p);
+        fs.unlinkSync(p);
         mergeCovData(data);
       });
       var callbacks = collecting;
